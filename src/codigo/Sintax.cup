@@ -1,0 +1,246 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+        System.out.println("Error sintactico en linea: " + s.right + " lexema: " + s.value);
+    }
+
+    public Symbol getS(){
+        return this.s;
+    }
+:};
+
+terminal Atlas, Comillas, Int, Char, Logic, Float, Double, Cadena, Device, Condition, Else, Do, Until, Option, Ventilate, Admit,
+         EmptyRoom, Dispense, Distance, DeviceControl, DriverLights, OpenDoor, RegisterA, Exit, Igual, Aritmetico, Op_logico,
+         Op_relacional, Op_atribucion, Op_incremento, Op_booleano, Parentesis_a, Parentesis_c, Llave_a, Llave_c, Corchete_a,
+         Corchete_c, Start, P_coma, Dos_puntos, Coma, Identificador, Numero, Numero_Dec, Texto, Caracter, End, Declare, As, Case, Begin;
+non terminal INICIO, SENTENCIA, DECLARACION, CONDITION, CONDITION_ELSE, UNTIL, DO_UNTIL, OPTION, SENTENCIA_BOOLEANA, CASE, SENTENCIA_ARITMETICA, INCREMENTO,
+             VENTILATE, ADMIT, EMPTYROOM, DISPENSE, DISTANCE, DEVICECONTROL, DRIVERLIGHTS, OPENDOOR, REGISTERA, DECLARACION_DISPOSITIVO, DECLARACION_DC,
+             OP_ARITMETICA, ATRIBUCION;
+
+start with INICIO;
+
+INICIO ::= Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           error Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start error Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador error DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION error Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas error Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin error Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a error Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c error SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA error Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c error End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c error |
+           error error Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           error Identificador error DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           error Identificador Llave_a DECLARACION error Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           error Identificador Llave_a DECLARACION Atlas error Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           error Identificador Llave_a DECLARACION Atlas Begin error Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           error Identificador Llave_a DECLARACION Atlas Begin Parentesis_a error Llave_a SENTENCIA Llave_c Llave_c End |
+           error Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c error SENTENCIA Llave_c Llave_c End |
+           error Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA error Llave_c End |
+           error Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c error End |
+           error Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c error
+           Start error error DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start error Llave_a DECLARACION error Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start error Llave_a DECLARACION Atlas error Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start error Llave_a DECLARACION Atlas Begin error Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start error Llave_a DECLARACION Atlas Begin Parentesis_a error Llave_a SENTENCIA Llave_c Llave_c End |
+           Start error Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c error SENTENCIA Llave_c Llave_c End |
+           Start error Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA error Llave_c End |
+           Start error Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c error End |
+           Start error Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c error |
+           Start Identificador error DECLARACION error Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador error DECLARACION Atlas error Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador error DECLARACION Atlas Begin error Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador error DECLARACION Atlas Begin Parentesis_a error Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador error DECLARACION Atlas Begin Parentesis_a Parentesis_c error SENTENCIA Llave_c Llave_c End |
+           Start Identificador error DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA error Llave_c End |
+           Start Identificador error DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c error End |
+           Start Identificador error DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c error |
+           Start Identificador Llave_a DECLARACION error error Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION error Begin error Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION error Begin Parentesis_a error Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION error Begin Parentesis_a Parentesis_c error SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION error Begin Parentesis_a Parentesis_c Llave_a SENTENCIA error Llave_c End |
+           Start Identificador Llave_a DECLARACION error Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c error End |
+           Start Identificador Llave_a DECLARACION error Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c error |
+           Start Identificador Llave_a DECLARACION Atlas error error Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas error Parentesis_a error Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas error Parentesis_a Parentesis_c error SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas error Parentesis_a Parentesis_c Llave_a SENTENCIA error Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas error Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c error End |
+           Start Identificador Llave_a DECLARACION Atlas error Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c error |
+           Start Identificador Llave_a DECLARACION Atlas Begin error error Llave_a SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin error Parentesis_c error SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin error Parentesis_c Llave_a SENTENCIA error Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin error Parentesis_c Llave_a SENTENCIA Llave_c error End |
+           Start Identificador Llave_a DECLARACION Atlas Begin error Parentesis_c Llave_a SENTENCIA Llave_c Llave_c error |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a error error SENTENCIA Llave_c Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a error Llave_a SENTENCIA error Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a error Llave_a SENTENCIA Llave_c error End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a error Llave_a SENTENCIA Llave_c Llave_c error |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c error SENTENCIA error Llave_c End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c error SENTENCIA Llave_c error End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c error SENTENCIA Llave_c Llave_c error |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA error error End |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA error Llave_c error |
+           Start Identificador Llave_a DECLARACION Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c error error | error
+;
+SENTENCIA ::= SENTENCIA DECLARACION |
+    DECLARACION |
+    SENTENCIA SENTENCIA_ARITMETICA |
+    SENTENCIA_ARITMETICA |
+    SENTENCIA CONDITION | 
+    CONDITION |
+    SENTENCIA CONDITION_ELSE |
+    CONDITION_ELSE |
+    SENTENCIA UNTIL |
+    UNTIL |
+    SENTENCIA DO_UNTIL |
+    DO_UNTIL |
+    SENTENCIA VENTILATE |
+    VENTILATE |
+    SENTENCIA ADMIT |
+    ADMIT |
+    SENTENCIA EMPTYROOM |
+    EMPTYROOM |
+    SENTENCIA DISPENSE |
+    DISPENSE |
+    SENTENCIA DISTANCE |
+    DISTANCE |
+    SENTENCIA DEVICECONTROL |
+    DEVICECONTROL |
+    SENTENCIA DRIVERLIGHTS |
+    DRIVERLIGHTS |
+    SENTENCIA OPENDOOR |
+    OPENDOOR |
+    SENTENCIA REGISTERA |
+    REGISTERA |
+    SENTENCIA Exit |
+    Exit
+;
+DECLARACION ::= Identificador Declare As Int P_coma |
+    Identificador Declare As Int Igual Numero P_coma |
+    Identificador Declare As Float P_coma |
+    Identificador Declare As Float Igual Numero P_coma |
+    Identificador Declare As Float Igual Numero_Dec P_coma |
+    Identificador Declare As Double P_coma |
+    Identificador Declare As Double Igual Numero P_coma |
+    Identificador Declare As Double Igual Numero_Dec P_coma |
+    Identificador Declare As Cadena P_coma |
+    Identificador Declare As Cadena Igual Texto P_coma |
+    Identificador Declare As Char P_coma |
+    Identificador Declare As Char Igual Caracter P_coma |
+    Identificador Declare As Cadena Igual Comillas Comillas P_coma |
+    Identificador Declare As Logic P_coma |
+    Identificador Declare As Logic Igual Op_booleano P_coma
+;
+
+SENTENCIA_ARITMETICA ::= INCREMENTO | OP_ARITMETICA | ATRIBUCION
+;
+INCREMENTO ::= Op_incremento Identificador | Identificador Op_incremento
+;
+OP_ARITMETICA ::= Identificador Aritmetico Identificador P_coma | Identificador Aritmetico OP_ARITMETICA Identificador P_coma
+;
+ATRIBUCION ::= Identificador Op_atribucion Numero | Identificador Op_atribucion Numero_Dec | Identificador Op_atribucion Texto
+;
+CONDITION ::= Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
+;
+SENTENCIA_BOOLEANA ::= Op_booleano | Identificador Op_relacional Op_booleano |
+                       Identificador Op_relacional Numero | Identificador Op_relacional Identificador |
+                       Op_logico SENTENCIA_BOOLEANA
+;
+CONDITION_ELSE ::= Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c Else Llave_a SENTENCIA_BOOLEANA Llave_c
+;
+UNTIL ::= Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
+;
+DO_UNTIL ::= Do Llave_a SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma
+;
+OPTION ::= Option Parentesis_a Identificador Parentesis_c Llave_a CASE Llave_c |
+           Option Parentesis_a Identificador Parentesis_c Llave_a CASE Llave_c
+;
+CASE ::= Case Texto Dos_puntos SENTENCIA CASE | Case Texto Dos_puntos SENTENCIA |
+         Case Numero Dos_puntos SENTENCIA CASE | Case Numero Dos_puntos SENTENCIA |
+         Case Numero_Dec Dos_puntos SENTENCIA CASE | Case Numero_Dec Dos_puntos SENTENCIA |
+         Case Caracter Dos_puntos SENTENCIA CASE | Case Caracter Dos_puntos SENTENCIA
+;
+
+VENTILATE ::= Ventilate Parentesis_a Numero Coma Op_booleano Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
+              Ventilate Parentesis_a Identificador Coma Op_booleano Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
+              Ventilate Parentesis_a Numero Coma Identificador Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
+              Ventilate Parentesis_a Numero Coma Op_booleano Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+              Ventilate Parentesis_a Numero Coma Op_booleano Coma Op_booleano Coma Identificador Parentesis_c P_coma |
+              Ventilate Parentesis_a Identificador Coma Identificador Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
+              Ventilate Parentesis_a Identificador Coma Op_booleano Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+              Ventilate Parentesis_a Identificador Coma Op_booleano Coma Op_booleano Coma Identificador Parentesis_c P_coma |
+              Ventilate Parentesis_a Numero Coma Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+              Ventilate Parentesis_a Numero Coma Identificador Coma Op_booleano Coma Identificador Parentesis_c P_coma |
+              Ventilate Parentesis_a Numero Coma Op_booleano Coma Identificador Coma Identificador Parentesis_c P_coma |
+              Ventilate Parentesis_a Numero Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma |
+              Ventilate Parentesis_a Identificador Coma Op_booleano Coma Identificador Coma Identificador Parentesis_c P_coma |
+              Ventilate Parentesis_a Identificador Coma Identificador Coma Op_booleano Coma Identificador Parentesis_c P_coma |
+              Ventilate Parentesis_a Identificador Coma Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+              Ventilate Parentesis_a Identificador Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma
+;
+ADMIT ::= Admit Parentesis_a Identificador Coma Identificador Coma Identificador Parentesis_c P_coma |
+	  Admit Parentesis_a Op_booleano Coma Identificador Coma Identificador Parentesis_c P_coma |
+	  Admit Parentesis_a Identificador Coma Numero Coma Identificador Parentesis_c P_coma |
+	  Admit Parentesis_a Identificador Coma Identificador Coma Numero_Dec Parentesis_c P_coma |
+	  Admit Parentesis_a Op_booleano Coma Numero Coma Identificador Parentesis_c P_coma |
+	  Admit Parentesis_a Op_booleano Coma Identificador Coma Numero_Dec Parentesis_c P_coma |
+	  Admit Parentesis_a Identificador Coma Numero Coma Numero_Dec Parentesis_c P_coma |
+	  Admit Parentesis_a Op_booleano Coma Numero Coma Numero_Dec Parentesis_c P_coma
+;
+EMPTYROOM ::= EmptyRoom Parentesis_a Op_booleano Coma Numero Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Identificador Coma Numero Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Op_booleano Coma Identificador Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Op_booleano Coma Numero Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Op_booleano Coma Numero Coma Op_booleano Coma Identificador Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Identificador Coma Identificador Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Identificador Coma Numero Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Identificador Coma Numero Coma Op_booleano Coma Identificador Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Op_booleano Coma Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Op_booleano Coma Identificador Coma Op_booleano Coma Identificador Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Op_booleano Coma Numero Coma Identificador Coma Identificador Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Op_booleano Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Identificador Coma Numero Coma Identificador Coma Identificador Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Identificador Coma Identificador Coma Op_booleano Coma Identificador Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Identificador Coma Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+              EmptyRoom Parentesis_a Identificador Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma
+;
+DISPENSE ::= Dispense Parentesis_a Identificador Coma Identificador Coma Identificador Parentesis_c P_coma |
+             Dispense Parentesis_a Op_booleano Coma Identificador Coma Identificador Parentesis_c P_coma |
+             Dispense Parentesis_a Identificador Coma Numero Coma Identificador Parentesis_c P_coma |
+             Dispense Parentesis_a Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+             Dispense Parentesis_a Op_booleano Coma Numero Coma Identificador Parentesis_c P_coma |
+             Dispense Parentesis_a Op_booleano Coma Identificador Coma Op_booleano Parentesis_c P_coma |
+             Dispense Parentesis_a Identificador Coma Numero Coma Op_booleano Parentesis_c P_coma |
+             Dispense Parentesis_a Op_booleano Coma Numero Coma Op_booleano Parentesis_c P_coma
+;
+DISTANCE ::= Distance Parentesis_a Device Corchete_a DECLARACION_DISPOSITIVO Corchete_c Parentesis_c P_coma
+;
+DECLARACION_DISPOSITIVO ::= Identificador Coma DECLARACION_DISPOSITIVO | Identificador |
+                            Parentesis_a Identificador Coma Identificador Coma Identificador Parentesis_c Coma DECLARACION_DISPOSITIVO |
+                            Parentesis_a Identificador Coma Identificador Coma Identificador Parentesis_c
+;
+DEVICECONTROL ::= DeviceControl Parentesis_a Op_booleano Coma Corchete_a DECLARACION_DC Corchete_c P_coma
+;
+DECLARACION_DC ::= Identificador Coma DECLARACION_DC | Identificador | Cadena Coma DECLARACION_DC | Cadena
+;
+DRIVERLIGHTS ::= DriverLights Parentesis_a Identificador Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma
+;
+OPENDOOR ::= OpenDoor Parentesis_a Identificador Coma Identificador Parentesis_c P_coma |
+             OpenDoor Parentesis_a Numero Coma Identificador Parentesis_c P_coma |
+             OpenDoor Parentesis_a Identificador Coma Op_booleano Parentesis_c P_coma |
+             OpenDoor Parentesis_a Numero Coma Op_booleano Parentesis_c P_coma
+;
+REGISTERA ::= RegisterA Parentesis_a Identificador Parentesis_c P_coma | RegisterA Parentesis_a Cadena Parentesis_c P_coma
+;
