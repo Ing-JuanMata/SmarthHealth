@@ -133,7 +133,7 @@ double  {lexeme=yytext(); return Double;}
 ( "]" ) {lexeme = yytext(); return Corchete_c;}
 
 /* Marcador de inicio de algoritmo */
-( "start" ) {lexeme=yytext(); return Start;}
+( start ) {lexeme=yytext(); return Start;}
 
 /* Punto y coma */
 ( ";" ) {lexeme=yytext(); return P_coma;}
@@ -153,6 +153,7 @@ As  {lexeme=yytext(); return As;}
 
 /* Numero Decimal */
 ("(-"{D}+\.{D}+")")|{D}+\.{D}+ {lexeme=yytext(); return Numero_Dec;}
+{D}+{L}+ {lexeme=yytext(); return ERROR;}
 
 /* Texto */
 \".+\" {lexeme=yytext(); return Texto;}
@@ -161,4 +162,4 @@ As  {lexeme=yytext(); return As;}
 \'.\' {lexeme=yytext(); return Caracter;}
 
 /* Error de analisis */
- . {return ERROR;}
+ . {lexeme=yytext(); return ERROR;}

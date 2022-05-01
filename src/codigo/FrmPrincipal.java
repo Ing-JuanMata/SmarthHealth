@@ -706,7 +706,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     resultado += "  <Caracter>\t" + lexer.lexeme + "\n";
                     break;
                 case ERROR:
-                    resultado += "  <Simbolo no definido>\n";
+                    resultado += "  <Simbolo no definido> " + lexer.lexeme;
                     break;
                 default:
                     resultado += "  < " + lexer.lexeme + " >\n";
