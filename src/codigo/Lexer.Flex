@@ -59,9 +59,6 @@ double  {lexeme=yytext(); return Double;}
 /* Palabra reservada Switch */
 ( option ) {lexeme=yytext(); return Option;}
 
-/* Palabra reservada For */
-( for ) {lexeme=yytext(); return For;}
-
 /* Palabra reservada Ventilar */
 ( ventilate ) {lexeme=yytext(); return Ventilate;}
 
@@ -100,10 +97,10 @@ double  {lexeme=yytext(); return Double;}
 ( "+" | "-" | "*" | "/" ) {lexeme=yytext(); return Aritmetico;}
 
 /* Operadores logicos */
-( "&&" | "||" | "!" | "&" | "|" ) {lexeme=yytext(); return Op_logico;}
+( "&&" | "||" | "!" | "&" ) {lexeme=yytext(); return Op_logico;}
 
 /*Operadores Relacionales */
-( ">" | "<" | "==" | "!=" | ">=" | "<=" | "<<" | ">>" ) {lexeme = yytext(); return Op_relacional;}
+( ">" | "<" | "==" | "!=" | ">=" | "<=") {lexeme = yytext(); return Op_relacional;}
 
 /* Operadores Atribucion */
 ( "+=" | "-="  | "*=" | "/=" | "%=" ) {lexeme = yytext(); return Op_atribucion;}
@@ -153,6 +150,8 @@ As  {lexeme=yytext(); return As;}
 
 /* Numero Decimal */
 ("(-"{D}+\.{D}+")")|{D}+\.{D}+ {lexeme=yytext(); return Numero_Dec;}
+
+/* Error Identificador */
 {D}+{L}+ {lexeme=yytext(); return ERROR;}
 
 /* Texto */
@@ -160,6 +159,9 @@ As  {lexeme=yytext(); return As;}
 
 /* Caracter */
 \'.\' {lexeme=yytext(); return Caracter;}
+
+/* Error caracter */
+\'.+\' {lexeme=yytext(); return ERROR;}
 
 /* Error de analisis */
  . {lexeme=yytext(); return ERROR;}

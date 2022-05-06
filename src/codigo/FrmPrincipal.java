@@ -575,6 +575,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 case Cadena:
                     resultado += "  <Palabra Reservada>\t" + lexer.lexeme + "\n";
                     break;
+                case Atlas:
+                    resultado += "  <Palabra Reservada>\t" + lexer.lexeme + "\n";
+                    break;
                 case Int:
                     resultado += "  <Palabra Reservada>\t" + lexer.lexeme + "\n";
                     break;
@@ -706,7 +709,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
                     resultado += "  <Caracter>\t" + lexer.lexeme + "\n";
                     break;
                 case ERROR:
-                    resultado += "  <Simbolo no definido> " + lexer.lexeme;
+                    resultado += "  <Simbolo no definido> " + lexer.lexeme + "\n";
                     break;
                 default:
                     resultado += "  < " + lexer.lexeme + " >\n";
@@ -907,7 +910,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         } catch (IOException ex) {
             return;
         }
-        
+
         String ST = txtEntrada.getText();
         Sintax s = new Sintax(new LexerCup(new StringReader(ST)));
 

@@ -22,7 +22,7 @@ terminal Atlas, Comillas, Int, Char, Logic, Float, Double, Cadena, Device, Condi
          Corchete_c, Start, P_coma, Dos_puntos, Coma, Identificador, Numero, Numero_Dec, Texto, Caracter, End, Declare, As, Case, Begin;
 non terminal INICIO, SENTENCIA, DECLARACION, CONDITION, CONDITION_ELSE, UNTIL, DO_UNTIL, OPTION, SENTENCIA_BOOLEANA, CASE, SENTENCIA_ARITMETICA, INCREMENTO,
              VENTILATE, ADMIT, EMPTYROOM, DISPENSE, DISTANCE, DEVICECONTROL, DRIVERLIGHTS, OPENDOOR, REGISTERA, DECLARACION_DISPOSITIVO, DECLARACION_DC,
-             OP_ARITMETICA, ATRIBUCION;
+             OP_ARITMETICA, ATRIBUCION, TIPOS_DEC, DEC_INI, CAMPO_NUM, CAMPO_BOOL, CAMPO_DEC, CAMPO_TEXTO;
 
 start with INICIO;
 
@@ -127,21 +127,30 @@ SENTENCIA ::= SENTENCIA DECLARACION |
     SENTENCIA Exit |
     Exit
 ;
-DECLARACION ::= Identificador Declare As Int P_coma |
-    Identificador Declare As Int Igual Numero P_coma |
-    Identificador Declare As Float P_coma |
-    Identificador Declare As Float Igual Numero P_coma |
-    Identificador Declare As Float Igual Numero_Dec P_coma |
-    Identificador Declare As Double P_coma |
-    Identificador Declare As Double Igual Numero P_coma |
-    Identificador Declare As Double Igual Numero_Dec P_coma |
-    Identificador Declare As Cadena P_coma |
-    Identificador Declare As Cadena Igual Texto P_coma |
-    Identificador Declare As Char P_coma |
-    Identificador Declare As Char Igual Caracter P_coma |
-    Identificador Declare As Cadena Igual Comillas Comillas P_coma |
-    Identificador Declare As Logic P_coma |
-    Identificador Declare As Logic Igual Op_booleano P_coma
+DECLARACION ::= Identificador Declare As TIPOS_DEC | Identificador Declare As DEC_INI |
+                error Declare As TIPOS_DEC | Identificador error As TIPOS_DEC | Identificador Declare error TIPOS_DEC |
+                error error As TIPOS_DEC | error Declare error TIPOS_DEC | Identificador error error TIPOS_DEC
+;
+
+TIPOS_DEC ::= Int P_coma | Float P_coma | Double P_coma | Cadena P_coma | Char P_coma | Logic P_coma | error P_coma |
+              Int error | Float error | Double error | Cadena error | Char error | Logic error | error error
+;
+DEC_INI ::= Int Igual Numero P_coma | Float Igual Numero P_coma | Float Igual Numero_Dec P_coma |
+            Double Igual Numero P_coma | Double Igual Numero_Dec P_coma | Cadena Igual Texto P_coma |
+            Char Igual Caracter P_coma | Cadena Igual Comillas Comillas P_coma | Logic Igual Op_booleano P_coma |
+            error Igual Numero P_coma | Int error Numero P_coma | Int Igual error P_coma | Int Igual Numero error |
+            error error Numero P_coma | error Igual error P_coma | error Igual Numero error | Float error Numero P_coma |
+            Float Igual error P_coma | Float Igual Numero error | error Igual Numero_Dec P_coma | Float error Numero_Dec P_coma |
+            Float Igual Numero_Dec error | Double error Numero P_coma | Double Igual error P_coma | Double Igual Numero error |
+            Double error Numero_Dec P_coma | Double Igual Numero_Dec error | error Igual Numero_Dec error | error Igual Texto P_coma |
+            Cadena error Texto P_coma | Cadena Igual error P_coma | Cadena Igual Texto error | error error Texto P_coma | error Igual Texto error |
+            error Igual Caracter P_coma | Char error Caracter P_coma | Char Igual error P_coma | Char Igual Caracter error |
+            error error Caracter P_coma | error Igual Caracter error | error Igual Comillas Comillas P_coma | Cadena error Comillas Comillas P_coma |
+            Cadena Igual error Comillas P_coma | Cadena Igual Comillas error P_coma | Cadena Igual Comillas Comillas error |
+            error error Comillas Comillas P_coma | error Igual error Comillas P_coma | error Igual Comillas error P_coma | error Igual Comillas Comillas error |
+            Cadena error Comillas error P_coma | Cadena error Comillas Comillas error | Cadena Igual error error P_coma |
+            Cadena Igual error Comillas error | Cadena Igual Comillas error error | error Igual Op_booleano P_coma | Logic error Op_booleano P_coma |
+            Logic Igual error P_coma | Logic Igual Op_booleano error | error error Op_booleano P_coma | error Igual Op_booleano error
 ;
 
 SENTENCIA_ARITMETICA ::= INCREMENTO | OP_ARITMETICA | ATRIBUCION
@@ -173,74 +182,63 @@ CASE ::= Case Texto Dos_puntos SENTENCIA CASE | Case Texto Dos_puntos SENTENCIA 
          Case Caracter Dos_puntos SENTENCIA CASE | Case Caracter Dos_puntos SENTENCIA
 ;
 
-VENTILATE ::= Ventilate Parentesis_a Numero Coma Op_booleano Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
-              Ventilate Parentesis_a Identificador Coma Op_booleano Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
-              Ventilate Parentesis_a Numero Coma Identificador Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
-              Ventilate Parentesis_a Numero Coma Op_booleano Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-              Ventilate Parentesis_a Numero Coma Op_booleano Coma Op_booleano Coma Identificador Parentesis_c P_coma |
-              Ventilate Parentesis_a Identificador Coma Identificador Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
-              Ventilate Parentesis_a Identificador Coma Op_booleano Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-              Ventilate Parentesis_a Identificador Coma Op_booleano Coma Op_booleano Coma Identificador Parentesis_c P_coma |
-              Ventilate Parentesis_a Numero Coma Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-              Ventilate Parentesis_a Numero Coma Identificador Coma Op_booleano Coma Identificador Parentesis_c P_coma |
-              Ventilate Parentesis_a Numero Coma Op_booleano Coma Identificador Coma Identificador Parentesis_c P_coma |
-              Ventilate Parentesis_a Numero Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma |
-              Ventilate Parentesis_a Identificador Coma Op_booleano Coma Identificador Coma Identificador Parentesis_c P_coma |
-              Ventilate Parentesis_a Identificador Coma Identificador Coma Op_booleano Coma Identificador Parentesis_c P_coma |
-              Ventilate Parentesis_a Identificador Coma Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-              Ventilate Parentesis_a Identificador Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma
+VENTILATE ::= Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              error Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate error CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate Parentesis_a CAMPO_NUM error CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL error CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL error CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL error P_coma |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c error |
+              error error CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              error Parentesis_a CAMPO_NUM error CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              error Parentesis_a CAMPO_NUM Coma CAMPO_BOOL error CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              error Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL error CAMPO_BOOL Parentesis_c P_coma |
+              error Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL error P_coma |
+              error Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c error |
+              Ventilate error CAMPO_NUM error CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate error CAMPO_NUM Coma CAMPO_BOOL error CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate error CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL error CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate error CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL error P_coma |
+              Ventilate error CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c error |
+              Ventilate Parentesis_a CAMPO_NUM error CAMPO_BOOL error CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate Parentesis_a CAMPO_NUM error CAMPO_BOOL Coma CAMPO_BOOL error CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate Parentesis_a CAMPO_NUM error CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL error P_coma |
+              Ventilate Parentesis_a CAMPO_NUM error CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c error |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL error CAMPO_BOOL error CAMPO_BOOL Parentesis_c P_coma |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL error CAMPO_BOOL Coma CAMPO_BOOL error P_coma |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL error CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c error |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL error CAMPO_BOOL error P_coma |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL error CAMPO_BOOL Parentesis_c error |
+              Ventilate Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Coma CAMPO_BOOL error error
 ;
-ADMIT ::= Admit Parentesis_a Identificador Coma Identificador Coma Identificador Parentesis_c P_coma |
-	  Admit Parentesis_a Op_booleano Coma Identificador Coma Identificador Parentesis_c P_coma |
-	  Admit Parentesis_a Identificador Coma Numero Coma Identificador Parentesis_c P_coma |
-	  Admit Parentesis_a Identificador Coma Identificador Coma Numero_Dec Parentesis_c P_coma |
-	  Admit Parentesis_a Op_booleano Coma Numero Coma Identificador Parentesis_c P_coma |
-	  Admit Parentesis_a Op_booleano Coma Identificador Coma Numero_Dec Parentesis_c P_coma |
-	  Admit Parentesis_a Identificador Coma Numero Coma Numero_Dec Parentesis_c P_coma |
-	  Admit Parentesis_a Op_booleano Coma Numero Coma Numero_Dec Parentesis_c P_coma
+CAMPO_NUM ::= Numero | Identificador | error
 ;
-EMPTYROOM ::= EmptyRoom Parentesis_a Op_booleano Coma Numero Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Identificador Coma Numero Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Op_booleano Coma Identificador Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Op_booleano Coma Numero Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Op_booleano Coma Numero Coma Op_booleano Coma Identificador Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Identificador Coma Identificador Coma Op_booleano Coma Op_booleano Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Identificador Coma Numero Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Identificador Coma Numero Coma Op_booleano Coma Identificador Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Op_booleano Coma Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Op_booleano Coma Identificador Coma Op_booleano Coma Identificador Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Op_booleano Coma Numero Coma Identificador Coma Identificador Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Op_booleano Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Identificador Coma Numero Coma Identificador Coma Identificador Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Identificador Coma Identificador Coma Op_booleano Coma Identificador Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Identificador Coma Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-              EmptyRoom Parentesis_a Identificador Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma
+CAMPO_BOOL ::= Op_booleano | Identificador | error
 ;
-DISPENSE ::= Dispense Parentesis_a Identificador Coma Identificador Coma Identificador Parentesis_c P_coma |
-             Dispense Parentesis_a Op_booleano Coma Identificador Coma Identificador Parentesis_c P_coma |
-             Dispense Parentesis_a Identificador Coma Numero Coma Identificador Parentesis_c P_coma |
-             Dispense Parentesis_a Identificador Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-             Dispense Parentesis_a Op_booleano Coma Numero Coma Identificador Parentesis_c P_coma |
-             Dispense Parentesis_a Op_booleano Coma Identificador Coma Op_booleano Parentesis_c P_coma |
-             Dispense Parentesis_a Identificador Coma Numero Coma Op_booleano Parentesis_c P_coma |
-             Dispense Parentesis_a Op_booleano Coma Numero Coma Op_booleano Parentesis_c P_coma
+CAMPO_DEC ::= Numero_Dec | Identificador | Numero | error
+;
+CAMPO_TEXTO ::= Texto | error
+;
+ADMIT ::= Admit Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_DEC Parentesis_c P_coma
+;
+EMPTYROOM ::= EmptyRoom Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma
+;
+DISPENSE ::= Dispense Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Parentesis_c P_coma
 ;
 DISTANCE ::= Distance Parentesis_a Device Corchete_a DECLARACION_DISPOSITIVO Corchete_c Parentesis_c P_coma
 ;
 DECLARACION_DISPOSITIVO ::= Identificador Coma DECLARACION_DISPOSITIVO | Identificador |
-                            Parentesis_a Identificador Coma Identificador Coma Identificador Parentesis_c Coma DECLARACION_DISPOSITIVO |
-                            Parentesis_a Identificador Coma Identificador Coma Identificador Parentesis_c
+                            Parentesis_a CAMPO_TEXTO Coma CAMPO_DEC Coma CAMPO_DEC Parentesis_c Coma DECLARACION_DISPOSITIVO |
+                            Parentesis_a CAMPO_TEXTO Coma CAMPO_DEC Coma CAMPO_DEC Parentesis_c
 ;
 DEVICECONTROL ::= DeviceControl Parentesis_a Op_booleano Coma Corchete_a DECLARACION_DC Corchete_c P_coma
 ;
 DECLARACION_DC ::= Identificador Coma DECLARACION_DC | Identificador | Cadena Coma DECLARACION_DC | Cadena
 ;
-DRIVERLIGHTS ::= DriverLights Parentesis_a Identificador Coma Identificador Coma Identificador Coma Identificador Parentesis_c P_coma
+DRIVERLIGHTS ::= DriverLights Parentesis_a CAMPO_DEC Coma CAMPO_BOOL Parentesis_c P_coma
 ;
-OPENDOOR ::= OpenDoor Parentesis_a Identificador Coma Identificador Parentesis_c P_coma |
-             OpenDoor Parentesis_a Numero Coma Identificador Parentesis_c P_coma |
-             OpenDoor Parentesis_a Identificador Coma Op_booleano Parentesis_c P_coma |
-             OpenDoor Parentesis_a Numero Coma Op_booleano Parentesis_c P_coma
+OPENDOOR ::= OpenDoor Parentesis_a CAMPO_NUM Coma CAMPO_BOOL Parentesis_c P_coma
 ;
-REGISTERA ::= RegisterA Parentesis_a Identificador Parentesis_c P_coma | RegisterA Parentesis_a Cadena Parentesis_c P_coma
+REGISTERA ::= RegisterA Parentesis_a CAMPO_TEXTO Parentesis_c P_coma
 ;
