@@ -161,13 +161,66 @@ OP_ARITMETICA ::= Identificador Aritmetico Identificador P_coma | Identificador 
 ;
 ATRIBUCION ::= Identificador Op_atribucion Numero | Identificador Op_atribucion Numero_Dec | Identificador Op_atribucion Texto
 ;
-CONDITION ::= Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
+CONDITION ::= Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c |
+              error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c |
+              Condition error SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c |
+              Condition Parentesis_a error Parentesis_c Llave_a SENTENCIA Llave_c |
+              Condition Parentesis_a SENTENCIA_BOOLEANA error Llave_a SENTENCIA Llave_c |
+              Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error SENTENCIA Llave_c |
+              Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a error Llave_c |
+              Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA error |
+
+              error error SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c |
+              error Parentesis_a error Parentesis_c Llave_a SENTENCIA Llave_c |
+              error Parentesis_a SENTENCIA_BOOLEANA error Llave_a SENTENCIA Llave_c |
+              error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error SENTENCIA Llave_c |
+              error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a error Llave_c |
+              error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a error  |
+
+              Condition error SENTENCIA_BOOLEANA error Llave_a SENTENCIA Llave_c |
+              Condition error SENTENCIA_BOOLEANA Parentesis_c error SENTENCIA Llave_c |
+              Condition error SENTENCIA_BOOLEANA Parentesis_c Llave_a error Llave_c |
+              Condition error SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA error |
+
+              Condition Parentesis_a SENTENCIA_BOOLEANA error Llave_a SENTENCIA Llave_c |
+              Condition Parentesis_a SENTENCIA_BOOLEANA error error SENTENCIA Llave_c |
+              Condition Parentesis_a SENTENCIA_BOOLEANA error Llave_a  Llave_c error_c |
+
+              Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error error Llave_c |
+              Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error SENTENCIA error 
+
+              
 ;
 SENTENCIA_BOOLEANA ::= Op_booleano | Identificador Op_relacional Op_booleano |
                        Identificador Op_relacional Numero | Identificador Op_relacional Identificador |
                        Op_logico SENTENCIA_BOOLEANA
+
+                       error | error Op_relacional Op_booleano | 
+                       Op_booleano | Identificador error Op_booleano |
+                       Op_booleano | Identificador Op_relacional error |
+                       
+                       error | error error Op_booleano | 
+                       Op_booleano | error Identificador error |
+                       
+                       error | Identificador error error |
+
+                       error Op_relacional Numero | error Op_relacional Identificador |
+                       Identificador error Numero | Identificador error Identificador |
+                       Identificador Op_relacional error | Identificador Op_relacional error |
+
+                       error error Numero | error error Identificador |
+                       error Op_relacional error | error Op_relacional error |
+
+                       error SENTENCIA_BOOLEANA
+
 ;
-CONDITION_ELSE ::= Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c Else Llave_a SENTENCIA_BOOLEANA Llave_c
+CONDITION_ELSE ::= CONDITION Else Llave_a SENTENCIA_BOOLEANA Llave_c |
+                   CONDITION error Llave_a SENTENCIA_BOOLEANA Llave_c |
+                   CONDITION Else error SENTENCIA_BOOLEANA Llave_c |
+                   CONDITION Else Llave_a SENTENCIA_BOOLEANA error |
+                   
+                   CONDITION error error SENTENCIA_BOOLEANA Llave_c |
+                   CONDITION error Llave_a SENTENCIA_BOOLEANA error 
 ;
 UNTIL ::= Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
 ;
