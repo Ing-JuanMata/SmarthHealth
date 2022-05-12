@@ -222,9 +222,54 @@ CONDITION_ELSE ::= CONDITION Else Llave_a SENTENCIA_BOOLEANA Llave_c |
                    CONDITION error error SENTENCIA_BOOLEANA Llave_c |
                    CONDITION error Llave_a SENTENCIA_BOOLEANA error 
 ;
-UNTIL ::= Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
+UNTIL ::= Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c |
+          error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c |
+          Until error SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c |
+          Until Parentesis_a SENTENCIA_BOOLEANA error Llave_a SENTENCIA Llave_c |
+          Until error SENTENCIA_BOOLEANA error Llave_a SENTENCIA Llave_c |
+          error error SENTENCIA_BOOLEANA error Llave_a SENTENCIA Llave_c |
+          error Parentesis_a SENTENCIA_BOOLEANA error Llave_a SENTENCIA Llave_c |
+          error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error SENTENCIA Llave_c |
+          error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA error |
+          error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error SENTENCIA error |
+          Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error SENTENCIA Llave_c |
+          Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA error |
+          Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error SENTENCIA error |
+          Until error SENTENCIA_BOOLEANA Parentesis_c error SENTENCIA error |
+          Until Parentesis_a SENTENCIA_BOOLEANA error error SENTENCIA error |
+          Until error SENTENCIA_BOOLEANA error error SENTENCIA error 
+          
 ;
-DO_UNTIL ::= Do Llave_a SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma
+DO_UNTIL ::= Do Llave_a SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma |
+             error Llave_a SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma|
+             Do Llave_a SENTENCIA Llave_c error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma |
+             error Llave_a SENTENCIA Llave_c error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma |
+             Do error SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma |
+             Do Llave SENTENCIA error Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma |
+             Do error SENTENCIA error Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c P_coma |
+             Do Llave_a SENTENCIA Llave_c Until error SENTENCIA_BOOLEANA Parentesis_c P_coma |
+             Do Llave_a SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA error P_coma |
+             Do Llave_a SENTENCIA Llave_c Until error SENTENCIA_BOOLEANA error P_coma |
+             Do error SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA error P_coma |
+             Do error SENTENCIA Llave_c Until error SENTENCIA_BOOLEANA Parentesis_c P_coma | 
+             Do Llave_a SENTENCIA error Until Parentesis_a SENTENCIA_BOOLEANA error P_coma |
+             Do Llave_a SENTENCIA error Until error SENTENCIA_BOOLEANA Parentesis_c P_coma |
+             Do error SENTENCIA error Until error SENTENCIA_BOOLEANA error P_coma |
+             Do Llave_a SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error |
+             error Llave_a SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error|
+             Do Llave_a SENTENCIA Llave_c error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error |
+             error Llave_a SENTENCIA Llave_c error Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error |
+             Do error SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error |
+             Do Llave SENTENCIA error Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error |
+             Do error SENTENCIA error Until Parentesis_a SENTENCIA_BOOLEANA Parentesis_c error |
+             Do Llave_a SENTENCIA Llave_c Until error SENTENCIA_BOOLEANA Parentesis_c error |
+             Do Llave_a SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA error error |
+             Do Llave_a SENTENCIA Llave_c Until error SENTENCIA_BOOLEANA error error |
+             Do error SENTENCIA Llave_c Until Parentesis_a SENTENCIA_BOOLEANA error error |
+             Do error SENTENCIA Llave_c Until error SENTENCIA_BOOLEANA Parentesis_c error | 
+             Do Llave_a SENTENCIA error Until Parentesis_a SENTENCIA_BOOLEANA error error |
+             Do Llave_a SENTENCIA error Until error SENTENCIA_BOOLEANA Parentesis_c error |
+             Do error SENTENCIA error Until error SENTENCIA_BOOLEANA error error 
 ;
 OPTION ::= Option Parentesis_a Identificador Parentesis_c Llave_a CASE Llave_c |
            Option Parentesis_a Identificador Parentesis_c Llave_a CASE Llave_c
@@ -277,7 +322,25 @@ ADMIT ::= Admit Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_DEC Parentesis
 ;
 EMPTYROOM ::= EmptyRoom Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Coma CAMPO_BOOL Parentesis_c P_coma
 ;
-DISPENSE ::= Dispense Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Parentesis_c P_coma
+DISPENSE ::= Dispense Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Parentesis_c P_coma |
+             error Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Parentesis_c P_coma |
+             error error CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Parentesis_c P_coma |
+             error Parentesis_a CAMPO_BOOL error CAMPO_NUM Coma CAMPO_BOOL Parentesis_c P_coma |
+             error Parentesis_a CAMPO_BOOL Coma CAMPO_NUM error CAMPO_BOOL Parentesis_c P_coma |
+             error Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL error P_coma |
+             error Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Parentesis_c error |
+             error error CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL error P_coma |
+             error error CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Parentesis_c error|
+             error Parentesis_a CAMPO_BOOL error CAMPO_NUM error CAMPO_BOOL Parentesis_c P_coma |
+             Dispense error CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Parentesis_c P_coma |
+             Dispense Parentesis_a CAMPO_BOOL error CAMPO_NUM Coma CAMPO_BOOL Parentesis_c P_coma |
+             Dispense Parentesis_a CAMPO_BOOL Coma CAMPO_NUM error CAMPO_BOOL Parentesis_c P_coma |
+             Dispense Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL error P_coma |
+             Dispense Parentesis_a CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL Parentesis_c error |
+             Dispense error CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL error P_coma |
+             Dispense error CAMPO_BOOL Coma CAMPO_NUM Coma CAMPO_BOOL error error |
+             Dispense Parentesis_a CAMPO_BOOL error CAMPO_NUM error CAMPO_BOOL Parentesis_c P_coma |
+             Dispense Parentesis_a CAMPO_BOOL error CAMPO_NUM error CAMPO_BOOL Parentesis_c error            
 ;
 DISTANCE ::= Distance Parentesis_a Device Corchete_a DECLARACION_DISPOSITIVO Corchete_c Parentesis_c P_coma
 ;
