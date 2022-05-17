@@ -328,6 +328,8 @@ class Lexer {
     }
     return j;
   }
+  
+  Pintar pintar = new Pintar();
 
   /** the input device */
   private java.io.Reader zzReader;

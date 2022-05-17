@@ -1,8 +1,8 @@
 start programa{
     Atlas begin(){
       valor Declare As int;
-      0val = 10;
+      val = 10;
       numero = 10;
       booleana = true || false;
     }
-}end;
+}end
