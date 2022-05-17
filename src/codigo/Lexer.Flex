@@ -12,6 +12,42 @@ espacio=[ \t\r]+
 %}
 %%
 
+/* Para colorear las palabras*/
+%{
+
+public Pintar pin=new Pintar();
+
+%}
+
+<YYINITIAL>{
+"Atlas" {pin.pintaNara(yychar,yylength()); return new Symbol(Atlas, yychar,yyline); } 
+"End" {pin.pintaNara(yychar,yylength()); return new Symbol(End, yychar,yyline); } 
+"begin" {pin.pintaNara(yychar,yylength()); return new Symbol(Begin, yychar,yyline); }
+"int" {pin.pintaNara(yychar,yylength()); return new Symbol(Int, yychar,yyline); } 
+"char" {pin.pintaNara(yychar,yylength()); return new Symbol(Char, yychar,yyline); } 
+"login" {pin.pintaNara(yychar,yylength()); return new Symbol(Logic, yychar,yyline); } 
+"float" {pin.pintaNara(yychar,yylength()); return new Symbol(Float, yychar,yyline); } 
+"double" {pin.pintaNara(yychar,yylength()); return new Symbol(Double, yychar,yyline); } 
+"condition" {pin.pintaNara(yychar,yylength()); return new Symbol(Condition, yychar,yyline); } 
+"device" {pin.pintaNara(yychar,yylength()); return new Symbol(Device, yychar,yyline); }
+"else" {pin.pintaNara(yychar,yylength()); return new Symbol(Else, yychar,yyline); }  
+"ventilate" {pin.pintaNara(yychar,yylength()); return new Symbol(Ventilate, yychar,yyline); } 
+"emtyRoom" {pin.pintaNara(yychar,yylength()); return new Symbol(EmptyRoom, yychar,yyline); } 
+"declare" {pin.pintaNara(yychar,yylength()); return new Symbol(Declare, yychar,yyline); } 
+"as" {pin.pintaNara(yychar,yylength()); return new Symbol(As, yychar,yyline); } 
+"admit" {pin.pintaNara(yychar,yylength()); return new Symbol(Admit, yychar,yyline); } 
+"dispence" {pin.pintaNara(yychar,yylength()); return new Symbol(Dispense, yychar,yyline); } 
+"distance" {pin.pintaNara(yychar,yylength()); return new Symbol(Distance, yychar,yyline); } 
+"do" {pin.pintaNara(yychar,yylength()); return new Symbol(Do, yychar,yyline); } 
+"until" {pin.pintaNara(yychar,yylength()); return new Symbol(Until, yychar,yyline); } 
+"option" {pin.pintaNara(yychar,yylength()); return new Symbol(Option, yychar,yyline); } 
+"deviceControl" {pin.pintaNara(yychar,yylength()); return new Symbol(DeviceControl, yychar,yyline); } 
+"driverLights" {pin.pintaNara(yychar,yylength()); return new Symbol(DriverLights, yychar,yyline); } 
+"openDoor" {pin.pintaNara(yychar,yylength()); return new Symbol(OpenDoor, yychar,yyline); } 
+"registerA" {pin.pintaNara(yychar,yylength()); return new Symbol(RegisterA, yychar,yyline); } 
+"exit" {pin.pintaNara(yychar,yylength()); return new Symbol(Exit, yychar,yyline); } 
+}  
+
 /* Espacios en blanco */
 {espacio} {/*Ignore*/}
 

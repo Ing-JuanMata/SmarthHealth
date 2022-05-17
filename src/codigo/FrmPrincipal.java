@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
@@ -552,9 +553,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
     //<editor-fold defaultstate="collapsed" desc=" analizadorLexico ">
     private void analizarLexico() throws IOException {
         int cont = 1;
-
+        
         String expr = (String) txtEntrada.getText();
         Lexer lexer = new Lexer(new StringReader(expr));
+        lexer.pintar.insertar(expr);
+        txtTokens.setDocument(lexer.pintar.caja2.getDocument());
         String resultado = "LINEA " + cont + "\t\t\tLEXEMA\n";
         while (true) {
             Tokens token = lexer.yylex();
@@ -913,6 +916,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         String ST = txtEntrada.getText();
         Sintax s = new Sintax(new LexerCup(new StringReader(ST)));
+
 
         try {
             errores.clear();
